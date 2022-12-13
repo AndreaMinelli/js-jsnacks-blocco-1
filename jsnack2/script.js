@@ -27,22 +27,29 @@ const messageElement = document.getElementById("message");
 
 button.addEventListener("click", function () {
   const name = userName.value.trim();
-  const formattedName = name.toLowerCase();
 
-  let isGuest = false;
-  let message = `Mi dispiace ${name}, non sei stato invitato, sarà per la prossima volta!`;
+  if (!name || !isNaN(name)) {
+    alert("Hai inserito un nome non valido!");
+    return;
+  } else {
+    const formattedName = name.toLowerCase();
+    let isGuest = false;
+    messageElement.classList.add("text-danger");
+    let message = `Mi dispiace ${name}, non sei stato invitato, sarà per la prossima volta!`;
 
-  for (let i = 0; i < guest.length && !isGuest; i++) {
-    const guestName = guest[i];
+    for (let i = 0; i < guest.length && !isGuest; i++) {
+      const guestName = guest[i];
 
-    if (guestName === formattedName) isGuest = true;
+      if (guestName === formattedName) isGuest = true;
 
-    if (isGuest) {
-      message = `Salve ${name}, spero che la festa sarà di tuo gradimento!`;
-      messageElement.classList.remove("text-danger");
-      messageElement.classList.add("text-success");
+      if (isGuest) {
+        message = `Salve ${name}, spero che la festa sarà di tuo gradimento!`;
+        messageElement.classList.remove("text-danger");
+        messageElement.classList.add("text-success");
+      }
     }
-  }
 
-  messageElement.innerText = message;
+    userName.value = "";
+    messageElement.innerText = message;
+  }
 });
